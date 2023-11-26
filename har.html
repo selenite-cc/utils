@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>har link getter</title>
+    <style>
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+      let i;
+      let p;
+      let elem;
+      let disable = 0;
+      document.addEventListener("DOMContentLoaded", () => {
+        const har = document.getElementById("har");
+        document.getElementById("harbt").addEventListener("click", () => {
+          data = JSON.parse(har.value);
+          for (i = 0; i < data["log"]["entries"].length; i++) {
+            console.log(data["log"]["entries"][i]["request"]["url"]);
+            elem = document.createElement("p");
+            elem.setAttribute("id", "p");
+            elem.innerHTML = data["log"]["entries"][i]["request"]["url"];
+            document.body.appendChild(elem);
+          }
+          for (i = 0; i < document.querySelectorAll("p").length; i++) {
+            document.querySelectorAll("p")[i].addEventListener("click", (e) => {
+                if(disable == 0) {
+                    e.target.remove();
+                }
+
+            });
+          }
+        });
+        document.getElementById("disable").addEventListener("click", () => {
+            disable = 1;
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <input type="text" id="har" />
+    <button id="harbt">submit</button>
+    <button id="disable">finish</button>
+    <br />
+  </body>
+</html>
